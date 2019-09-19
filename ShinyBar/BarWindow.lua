@@ -5,7 +5,7 @@ function BarWindow:Constructor( tSettings )
     Turbine.UI.Window.Constructor(self)
     self:SetPosition(self.settings.left,self.settings.top);
     self:SetSize(self.settings.width,self.settings.height);
-    self:SetBackColor(self.settings.color);
+    self:SetBackColor(Turbine.UI.Color(self.settings.color.A, self.settings.color.R, self.settings.color.B, self.settings.color.B));
     self:SetVisible(self.settings.visibility);
     self.MouseClick = function(sender, args)
         if (args.Button == Turbine.UI.MouseButton.Right) then
