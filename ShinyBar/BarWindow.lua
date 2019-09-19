@@ -9,16 +9,15 @@ function BarWindow:Constructor( tSettings)
     self:SetVisible(self.settings.visibility);
     self.MouseClick = function(sender, args)
         if (args.Button == Turbine.UI.MouseButton.Right) then
-            self.Menu:ShowMenu();    
+            self.Menu:ShowMenu();
         end
     end
     self.Menu = Turbine.UI.ContextMenu();
     newGeneralControl = Turbine.UI.MenuItem("New GeneralControl test");
-    newGeneralControl.Click = function(sender, args) 
+    newGeneralControl.Click = function(sender, args)
         control = Settings.GetControlDefaults();
         control = GeneralControl(self);
         control:SetText("Test");
-        table.insert(self.settings.controls, control)
     end
     self.Menu:GetItems():Add(newGeneralControl);
 end

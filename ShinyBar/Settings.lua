@@ -41,7 +41,7 @@ function Settings:_Save()
 	fSave( Turbine.DataScope.Character, "ShinyBarSettings", tSettings );
 end
 
-function Settings.GetcontrolDefaults()
+function Settings.GetControlDefaults()
 	-- default control
 	return {
 		left = 0,
