@@ -17,15 +17,13 @@ function Settings:_Load()
 		-- set defaults
 		self:SetDefaults();
 		self:Save();
-	else
-		tSettings = self:Decode( tSettings );
-
+  else
 		for i,v in pairs( tSettings ) do
-			if (i == "windows") then
-				self.windows = {};
+			if (i == "bars") then
+				self.bars = {};
 				local size = table.getn(v);
 				for i = 1, size do
-					self.windows[i] = v[i];
+					self.bars[i] = v[i];
 				end
 			else
 				self[i] = v;
@@ -36,7 +34,7 @@ end
 
 function Settings:_Save()
 	local fSave = Turbine.PluginData.Save; -- VindarPatch may not touch me
-	local tSettings = self:Encode( self );
+	local tSettings = self;
 
 	fSave( Turbine.DataScope.Character, "ShinyBarSettings", tSettings );
 end
@@ -61,7 +59,7 @@ function Settings.GetBarDefaults()
      height = 30,
      width = width,
      visibility = true,
-     color = Turbine.UI.Color.Transparent
+     color = Turbine.UI.Color.SkyBlue
    };
 end
 

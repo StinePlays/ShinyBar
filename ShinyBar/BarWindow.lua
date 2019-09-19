@@ -1,6 +1,6 @@
 BarWindow = class (Turbine.UI.Window)
 
-function BarWindow:Constructor( tSettings)
+function BarWindow:Constructor( tSettings )
     self.settings = tSettings
     Turbine.UI.Window.Constructor(self)
     self:SetPosition(self.settings.left,self.settings.top);

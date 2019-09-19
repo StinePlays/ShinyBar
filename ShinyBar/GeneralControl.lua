@@ -4,7 +4,7 @@
 --  * require FontMetric.lua by Garan
 --  * Display icon with label
 -------------------------------------------------------------------------------
-import "Shiny.ShinyBar.Utils.FontMetric"
+import "Drono.TBar.Utils.FontMetric"
 
 GeneralControl = class (Turbine.UI.Control)
 
@@ -58,9 +58,7 @@ function GeneralControl:Constructor(parent)
         if (args.Button == Turbine.UI.MouseButton.Right) then
             menu = Turbine.UI.ContextMenu();
             destroy = Turbine.UI.MenuItem("delete");
-            destroy.Click = function(sender, args)
-                self:SetParent(nil); self = nil
-            end
+            destroy.Click = function(sender, args) self:SetParent(nil); self = nil end
             menu:GetItems():Add(destroy);
             menu:ShowMenu();
         end

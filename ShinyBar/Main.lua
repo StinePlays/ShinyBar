@@ -1,9 +1,23 @@
-import "Shiny.ShinyBar.BarWindow"
-import "Shiny.ShinyBar.GeneralControl"
-import "Shiny.ShinyBar.Settings"
+import "Drono.ShinyBar.BarWindow"
+import "Drono.ShinyBar.GeneralControl"
+import "Drono.ShinyBar.Settings"
 
-local sbar = BarWindow(Settings.GetBarDefaults());
+Settings.Load();
 
-local control = GeneralControl(sbar);
-control:SetText("Test");
+function ResetWindows()
+	local i;
+  local j;
+	bars = {};
+	for i = 1, table.getn(Settings.instance.bars) do
+		if (Settings.instance.bars[i].visibility) then
+			bar = BarWindow( Settings.instance.bars[i] );
+		end
+	end
+end
 
+ResetWindows()
+
+-- plugin unload event
+plugin.Unload = function()
+	Settings.Save();
+end
