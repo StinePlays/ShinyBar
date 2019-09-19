@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<Plugin>
+    <Information>
+        <Name>ShinyBar</Name>
+        <Author>Drono and Stine</Author>
+        <Version>0.1</Version>
+        <Description>Too Shiny for you</Description>
+    </Information>
+    <Package>Shiny.ShinyBar.Main</Package>
+    <Configuration Apartment="ShinyBar" />
+</Plugin>
