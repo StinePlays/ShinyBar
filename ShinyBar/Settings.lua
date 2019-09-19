@@ -61,7 +61,7 @@ function Settings.GetBarDefaults()
      height = 30,
      width = width,
      visibility = true,
-     color = Turbine.UI.Color.Transparent   
+     color = Turbine.UI.Color.Transparent
    };
 end
 
