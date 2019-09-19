@@ -4,7 +4,7 @@
 --  * require FontMetric.lua by Garan
 --  * Display icon with label
 -------------------------------------------------------------------------------
-import "Drono.TBar.Utils.FontMetric"
+import "Shiny.ShinyBar.Utils.FontMetric"
 
 GeneralControl = class (Turbine.UI.Control)
 

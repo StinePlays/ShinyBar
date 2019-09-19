@@ -1,6 +1,6 @@
-import "Drono.ShinyBar.BarWindow"
-import "Drono.ShinyBar.GeneralControl"
-import "Drono.ShinyBar.Settings"
+import "Shiny.ShinyBar.BarWindow"
+import "Shiny.ShinyBar.GeneralControl"
+import "Shiny.ShinyBar.Settings"
 
 Settings.Load();
 
