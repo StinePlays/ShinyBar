@@ -41,6 +41,7 @@ function Settings.GetControlDefaults()
         itemWidth = 200,
         itemHeight = 30,
         name = "NewControl",
+        color = Turbine.UI.Color.Red
     };
 end
 

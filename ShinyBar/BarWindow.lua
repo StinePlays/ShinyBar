@@ -1,5 +1,6 @@
 --import "Shiny.ShinyBar.ColorPicker.ColorPicker"; TODO
 import "Thurallor.Common.UI.ColorPicker";
+import "Thurallor.Common.Utils.Utils_5";
 
 BarWindow = class (Turbine.UI.Window);
 
@@ -33,7 +34,7 @@ function BarWindow:Constructor( tSettings )
     changeBackgroundColor = Turbine.UI.MenuItem("Change background color");
     changeBackgroundColor.Click = function(sender, args)
         bgColor = Thurallor.UI.ColorPicker(self:GetBackColor());
-        
+
         bgColor.ColorChanged = function(picker)
             local color = picker:GetColor();
             self:SetBackColor(color);
@@ -46,8 +47,8 @@ end
 
 function BarWindow:AddGeneralControl(cSettings)
     if (cSettings == nil) then
-        table.insert(self.settings.controls, Settings.GetControlDefaults());
-        cSettings = self.settings.controls[#self.settings.controls];
+        cSettings = Thurallor.Common.Utils.DeepTableCopy(Settings.GetControlDefaults(), cSettings)
+        table.insert(self.settings.controls, cSettings);
     end
     control = GeneralControl(self, cSettings);
 end
