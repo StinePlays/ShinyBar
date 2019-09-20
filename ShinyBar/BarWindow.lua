@@ -1,4 +1,7 @@
-BarWindow = class (Turbine.UI.Window)
+--import "Shiny.ShinyBar.ColorPicker.ColorPicker"; TODO
+import "Thurallor.Common.UI.ColorPicker";
+
+BarWindow = class (Turbine.UI.Window);
 
 function BarWindow:Constructor( tSettings )
     self.settings = tSettings
@@ -16,12 +19,29 @@ function BarWindow:Constructor( tSettings )
             self.Menu:ShowMenu();
         end
     end
+
     self.Menu = Turbine.UI.ContextMenu();
+
+    --New Control Test
     newGeneralControl = Turbine.UI.MenuItem("New GeneralControl test");
     newGeneralControl.Click = function(sender, args)
         self:AddGeneralControl();
     end
     self.Menu:GetItems():Add(newGeneralControl);
+
+    --Change background color of bar
+    changeBackgroundColor = Turbine.UI.MenuItem("Change background color");
+    changeBackgroundColor.Click = function(sender, args)
+        bgColor = Thurallor.UI.ColorPicker(self:GetBackColor());
+        
+        bgColor.ColorChanged = function(picker)
+            local color = picker:GetColor();
+            self:SetBackColor(color);
+            self.settings.color = color;
+            Settings.Save();
+        end
+    end
+    self.Menu:GetItems():Add(changeBackgroundColor);
 end
 
 function BarWindow:AddGeneralControl(cSettings)
