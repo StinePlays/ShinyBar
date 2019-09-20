@@ -8,13 +8,15 @@ import "Shiny.ShinyBar.Utils.FontMetric"
 
 GeneralControl = class (Turbine.UI.Control)
 
-function GeneralControl:Constructor(parent)
+function GeneralControl:Constructor(parent, tSettings)
     Turbine.UI.Control.Constructor(self)
+
+    self.settings = tSettings;
     self:SetParent(parent);
     self:SetZOrder(2);
     self:SetBlendMode(Turbine.UI.BlendModeAlphaBlend);
-    self:SetBackColor(Turbine.UI.Color.Red);
-    self:SetPosition(0,0);
+    self:SetBackColor(Turbine.UI.Color(self.settings.color.A, self.settings.color.R, self.settings.color.G, self.settings.color.B));
+    self:SetPosition(self.settings.left,self.settings.top);
     self:SetSize(60,30);
 
     self.Label = Turbine.UI.Label();
@@ -25,6 +27,7 @@ function GeneralControl:Constructor(parent)
     self.Label:SetFontStyle(Turbine.UI.FontStyle.Outline);
     self.Label:SetFont(Turbine.UI.Lotro.Font.TrajanPro14);
     self.Label:SetSize(0,self:GetHeight());
+    self.Label:SetText(self.settings.name);
 
     self.IconWindow = Turbine.UI.Control();
     self.IconWindow:SetSize(0,0);
@@ -62,6 +65,9 @@ function GeneralControl:Constructor(parent)
             menu:GetItems():Add(destroy);
             menu:ShowMenu();
         end
+    end
+    self.PositionChanged = function(sender, args)
+        self.settings.left, self.settings.top = self:GetPosition();
     end
 end
 
