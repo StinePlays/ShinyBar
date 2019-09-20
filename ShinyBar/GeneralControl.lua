@@ -27,7 +27,6 @@ function GeneralControl:Constructor(parent, tSettings)
     self.Label:SetFontStyle(Turbine.UI.FontStyle.Outline);
     self.Label:SetFont(Turbine.UI.Lotro.Font.TrajanPro14);
     self.Label:SetSize(0,self:GetHeight());
-    self.Label:SetText(self.settings.name);
 
     self.IconWindow = Turbine.UI.Control();
     self.IconWindow:SetSize(0,0);
@@ -39,6 +38,8 @@ function GeneralControl:Constructor(parent, tSettings)
     self.Icon:SetSize(0,0);
     self.Icon:SetMouseVisible(false);
     self.Icon:SetPosition(self.Label:GetLeft()+self.Label:GetWidth(),0);
+
+    self:SetText(self.settings.name);
 
     self.MouseMove = function(sender, args)
         if self.dragging ~= nil then
@@ -61,7 +62,11 @@ function GeneralControl:Constructor(parent, tSettings)
         if (args.Button == Turbine.UI.MouseButton.Right) then
             menu = Turbine.UI.ContextMenu();
             destroy = Turbine.UI.MenuItem("delete");
-            destroy.Click = function(sender, args) self:SetParent(nil); self = nil end
+            destroy.Click = function(sender, args)
+                table.foreach( parent.settings.controls, function( k, v ) if ( v == self.settings ) then table.remove( parent.settings.controls, k ) end end );
+                self:SetParent(nil);
+                self = nil
+            end
             menu:GetItems():Add(destroy);
             menu:ShowMenu();
         end
