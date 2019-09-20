@@ -12,9 +12,12 @@ function BarWindow:Constructor( tSettings )
     self:SetBackColor(Turbine.UI.Color(self.settings.color.A, self.settings.color.R, self.settings.color.G, self.settings.color.B));
     self:SetVisible(self.settings.visibility);
 
-    for i = 1, #self.settings.controls do
-        control = GeneralControl(self, self.settings.controls[i]);
+    if(self.settings.controls ~= nil) then
+        for i = 1, #self.settings.controls do
+            control = GeneralControl(self, self.settings.controls[i]);
+        end
     end
+
     self.MouseClick = function(sender, args)
         if (args.Button == Turbine.UI.MouseButton.Right) then
             self.Menu:ShowMenu();
@@ -48,6 +51,9 @@ end
 function BarWindow:AddGeneralControl(cSettings)
     if (cSettings == nil) then
         cSettings = Thurallor.Common.Utils.DeepTableCopy(Settings.GetControlDefaults(), cSettings)
+        if(self.settings.controls == nil) then
+            self.settings.controls = {};
+        end
         table.insert(self.settings.controls, cSettings);
     end
     control = GeneralControl(self, cSettings);
