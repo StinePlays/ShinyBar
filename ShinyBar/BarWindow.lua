@@ -1,6 +1,6 @@
---import "Shiny.ShinyBar.ColorPicker.ColorPicker"; TODO
+--import "Shiny.ShinyBar.ColorPicker.ColorPicker"; TODO add transparency
 import "Thurallor.Common.UI.ColorPicker";
-import "Thurallor.Common.Utils.Utils_5";
+import "Shiny.ShinyBar.Utils.Utils"
 
 BarWindow = class (Turbine.UI.Window);
 
@@ -50,7 +50,7 @@ end
 
 function BarWindow:AddGeneralControl(cSettings)
     if (cSettings == nil) then
-        cSettings = Thurallor.Common.Utils.DeepTableCopy(Settings.GetControlDefaults(), cSettings)
+        cSettings = Utils.Deepcopy(Settings.GetControlDefaults())
         if(self.settings.controls == nil) then
             self.settings.controls = {};
         end

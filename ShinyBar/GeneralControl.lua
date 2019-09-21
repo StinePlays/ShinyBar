@@ -39,6 +39,8 @@ function GeneralControl:Constructor(parent, tSettings)
     self.Icon:SetMouseVisible(false);
     self.Icon:SetPosition(self.Label:GetLeft()+self.Label:GetWidth(),0);
 
+    self.Menu = Turbine.UI.ContextMenu();
+
     self:SetText(self.settings.name);
 
     self.MouseMove = function(sender, args)
@@ -60,20 +62,33 @@ function GeneralControl:Constructor(parent, tSettings)
     end
     self.MouseClick = function(sender, args)
         if (args.Button == Turbine.UI.MouseButton.Right) then
-            menu = Turbine.UI.ContextMenu();
-            destroy = Turbine.UI.MenuItem("delete");
-            destroy.Click = function(sender, args)
-                table.foreach( parent.settings.controls, function( k, v ) if ( v == self.settings ) then table.remove( parent.settings.controls, k ) end end );
-                self:SetParent(nil);
-                self = nil
-            end
-            menu:GetItems():Add(destroy);
-            menu:ShowMenu();
+            self.Menu:ShowMenu();
         end
     end
     self.PositionChanged = function(sender, args)
         self.settings.left, self.settings.top = self:GetPosition();
     end
+
+    changeBackgroundColor = Turbine.UI.MenuItem("Change background color");
+    changeBackgroundColor.Click = function(sender, args)
+        bgColor = Thurallor.UI.ColorPicker(self:GetBackColor());
+
+        bgColor.ColorChanged = function(picker)
+            local color = picker:GetColor();
+            self:SetBackColor(color);
+            self.settings.color = color;
+            Settings.Save();
+        end
+    end
+    self.Menu:GetItems():Add(changeBackgroundColor);
+
+    destroy = Turbine.UI.MenuItem("delete");
+    destroy.Click = function(sender, args)
+        table.foreach( parent.settings.controls, function( k, v ) if ( v == self.settings ) then table.remove( parent.settings.controls, k ) end end );
+        self:SetParent(nil);
+        self = nil
+    end
+    self.Menu:GetItems():Add(destroy);
 end
 
 function GeneralControl:MoveControl(args)
