@@ -14,7 +14,8 @@ function BarWindow:Constructor( tSettings )
 
     if(self.settings.controls ~= nil) then
         for i = 1, #self.settings.controls do
-            control = GeneralControl(self, self.settings.controls[i]);
+            constructor = loadstring("a,b = ...; "..self.settings.controls[i].control.."(a,b);");
+            control = constructor(self, self.settings.controls[i]);
         end
     end
 
