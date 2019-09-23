@@ -7,10 +7,46 @@
 import "Shiny.ShinyBar.Utils.FontMetric"
 
 GeneralControl = class (Turbine.UI.Control)
+GeneralControl.__index = GeneralControl
 
 function GeneralControl:Constructor(parent, tSettings)
+    local self = setmetatable({}, GeneralControl)
     Turbine.UI.Control.Constructor(self)
-
+    
+    self.SetText = function(sender, text)
+        self.Label:SetText(text);
+        local fontMetric = Utils.FontMetric();
+        fontMetric:SetFont(self.Label:GetFont());
+        self.Label:SetWidth(fontMetric:GetTextWidth(text)+10);
+        self.IconWindow:SetPosition(self.Label:GetLeft()+self.Label:GetWidth(),0);
+        self:SetWidth(self.Label:GetWidth()+self.IconWindow:GetWidth());
+        self:Adjust()
+    end
+    
+    self.Adjust = function()
+        local ctrX = self:GetLeft();
+        local ctrW = self:GetWidth();
+        if ctrX < 0 then ctrX = 0;
+        elseif ctrX + ctrW > self:GetParent():GetWidth() then
+            ctrX = self:GetParent():GetWidth() - ctrW;
+        end
+        local ctrY = self:GetTop();
+        local ctrH = self:GetHeight();
+        if ctrY < 0 then ctrY = 0;
+        elseif ctrY + ctrH > self:GetParent():GetHeight() then
+            ctrY = self:GetParent():GetHeight() - ctrH;
+        end
+        self:SetPosition(ctrX,ctrY);
+    end
+    
+    self.SetIcon = function(icon)
+        self.IconWindow:SetSize(self:GetHeight(), self:GetHeight());
+        self.Icon:SetBackground(icon);
+        self.Icon:SetStretchMode(2);
+        self:SetWidth(self.Label:GetWidth()+self.IconWindow:GetWidth());
+        self:Adjust()    
+    end
+    
     self.settings = tSettings;
     self:SetParent(parent);
     self:SetZOrder(2);
@@ -89,44 +125,13 @@ function GeneralControl:Constructor(parent, tSettings)
         self = nil
     end
     self.Menu:GetItems():Add(destroy);
-end
-
-function GeneralControl:MoveControl(args)
-    self:SetPosition(self:GetLeft() + (args.X - self.dragStartX),
-        self:GetTop() + (args.Y - self.dragStartY));
-    self:Adjust();
-end
-
-function GeneralControl:Adjust()
-    local ctrX = self:GetLeft();
-    local ctrW = self:GetWidth();
-    if ctrX < 0 then ctrX = 0;
-    elseif ctrX + ctrW > self:GetParent():GetWidth() then
-        ctrX = self:GetParent():GetWidth() - ctrW;
+    
+    self.MoveControl = function(sender, args)
+        self:SetPosition(self:GetLeft() + (args.X - self.dragStartX),
+            self:GetTop() + (args.Y - self.dragStartY));
+        self:Adjust();
     end
-    local ctrY = self:GetTop();
-    local ctrH = self:GetHeight();
-    if ctrY < 0 then ctrY = 0;
-    elseif ctrY + ctrH > self:GetParent():GetHeight() then
-        ctrY = self:GetParent():GetHeight() - ctrH;
-    end
-    self:SetPosition(ctrX,ctrY);
-end
+    
 
-function GeneralControl:SetText(text)
-    self.Label:SetText(text);
-    local fontMetric = Utils.FontMetric();
-    fontMetric:SetFont(self.Label:GetFont());
-    self.Label:SetWidth(fontMetric:GetTextWidth(text)+10);
-    self.IconWindow:SetPosition(self.Label:GetLeft()+self.Label:GetWidth(),0);
-    self:SetWidth(self.Label:GetWidth()+self.IconWindow:GetWidth());
-    self:Adjust()
-end
-
-function GeneralControl:SetIcon(icon)
-    self.IconWindow:SetSize(self:GetHeight(), self:GetHeight());
-    self.Icon:SetBackground(icon);
-    self.Icon:SetStretchMode(2);
-    self:SetWidth(self.Label:GetWidth()+self.IconWindow:GetWidth());
-    self:Adjust()
+    return self
 end

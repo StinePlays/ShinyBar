@@ -34,6 +34,13 @@ function BarWindow:Constructor( tSettings )
     end
     self.Menu:GetItems():Add(newGeneralControl);
 
+    --New Location Control
+    newLocationControl = Turbine.UI.MenuItem("Location");
+    newLocationControl.Click = function(sender, args)
+        self:AddLocationControl();
+    end
+    self.Menu:GetItems():Add(newLocationControl);
+
     --Change background color of bar
     changeBackgroundColor = Turbine.UI.MenuItem("Change background color");
     --Click color event
@@ -43,7 +50,7 @@ function BarWindow:Constructor( tSettings )
         --select color for preview
         bgColor.ColorChanged = function(picker)
             local color = picker:GetColor();
-            self:SetBackColor(color);            
+            self:SetBackColor(color);
         end
 
         --save chosen color/click OK
@@ -65,4 +72,17 @@ function BarWindow:AddGeneralControl(cSettings)
         table.insert(self.settings.controls, cSettings);
     end
     control = GeneralControl(self, cSettings);
+end
+
+function BarWindow:AddLocationControl(cSettings)
+    if (cSettings == nil) then
+        cSettings = Utils.Deepcopy(Settings.GetControlDefaults())
+        cSettings.name = "Unknown";
+        cSettings.control = "LocationControl"
+        if(self.settings.controls == nil) then
+            self.settings.controls = {};
+        end
+        table.insert(self.settings.controls, cSettings);
+    end
+    control = LocationControl(self, cSettings);
 end

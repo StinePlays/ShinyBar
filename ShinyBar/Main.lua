@@ -1,5 +1,6 @@
 import "Shiny.ShinyBar.BarWindow"
 import "Shiny.ShinyBar.GeneralControl"
+import "Shiny.ShinyBar.LocationControl"
 import "Shiny.ShinyBar.Settings"
 
 Settings.Load();
