@@ -1,5 +1,5 @@
---import "Shiny.ShinyBar.ColorPicker.ColorPicker"; TODO add transparency
-import "Thurallor.Common.UI.ColorPicker";
+import "Shiny.ShinyBar.Utils.ColorPicker"; --TODO add transparency
+--import "Thurallor.Common.UI.ColorPicker";
 import "Shiny.ShinyBar.Utils.Utils"
 
 BarWindow = class (Turbine.UI.Window);
@@ -38,7 +38,7 @@ function BarWindow:Constructor( tSettings )
     changeBackgroundColor = Turbine.UI.MenuItem("Change background color");
     --Click color event
     changeBackgroundColor.Click = function(sender, args)
-        bgColor = Thurallor.UI.ColorPicker(self:GetBackColor());
+        bgColor = Shiny.ShinyBar.Utils.ColorPicker(self:GetBackColor());
 
         --select color for preview
         bgColor.ColorChanged = function(picker)
