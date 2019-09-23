@@ -4,7 +4,7 @@
         <Name>ShinyBar</Name>
         <Author>Drono and Stine</Author>
         <Version>0.1</Version>
-        <Description>Too Shiny for you</Description>
+        <Description>For keeping track of all of your precious shinies</Description>
     </Information>
     <Package>Shiny.ShinyBar.Main</Package>
     <Configuration Apartment="ShinyBar" />

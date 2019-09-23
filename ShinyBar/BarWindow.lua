@@ -36,12 +36,19 @@ function BarWindow:Constructor( tSettings )
 
     --Change background color of bar
     changeBackgroundColor = Turbine.UI.MenuItem("Change background color");
+    --Click color event
     changeBackgroundColor.Click = function(sender, args)
         bgColor = Thurallor.UI.ColorPicker(self:GetBackColor());
 
+        --select color for preview
         bgColor.ColorChanged = function(picker)
             local color = picker:GetColor();
-            self:SetBackColor(color);
+            self:SetBackColor(color);            
+        end
+
+        --save chosen color/click OK
+        bgColor.Accepted = function(picker)
+            local color = picker:GetColor();
             self.settings.color = color;
             Settings.Save();
         end
