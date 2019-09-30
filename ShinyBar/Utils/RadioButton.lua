@@ -93,8 +93,4 @@ function RadioButton:IsEnabled()
     return self.enabled;
 end
 
-
--- if (not Thurallor.UI) then
---     Thurallor.UI = {};
--- end
 Shiny.ShinyBar.Utils.RadioButton = RadioButton;

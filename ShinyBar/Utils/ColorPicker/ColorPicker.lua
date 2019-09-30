@@ -88,7 +88,7 @@ function ColorPicker:Constructor(color, dimension)
     self.radioButtons["B"].Clicked = function()
         self:SelectDimension("B");
     end
-    top = top + 30;
+    top = top + radioButtonHeight;
 
     self.radioButtons["H"] = Utils.RadioButton(self.radioContainer, L:GetText("Hue"), false);
     self.radioButtons["H"]:SetFont(Turbine.UI.Lotro.Font.TrajanPro15);
@@ -115,9 +115,19 @@ function ColorPicker:Constructor(color, dimension)
     self.radioButtons["V"].Clicked = function()
         self:SelectDimension("V");
     end
-    top = top + 34;
+    top = top + radioButtonHeight;
+
+    self.radioButtons["O"] = Utils.RadioButton(self.radioContainer, L:GetText("Opacity"), false);
+    self.radioButtons["O"]:SetFont(Turbine.UI.Lotro.Font.TrajanPro15);
+    self.radioButtons["O"]:SetTop(top);
+    self.radioButtons["O"]:SetSize(radioButtonWidth, radioButtonHeight);
+    self.radioButtons["O"].Clicked = function()
+        self:SetOpacity("O");
+    end
+    top = top + radioButtonHeight;
     
-    Utils.RadioButton.LinkPeers({self.radioButtons["R"], self.radioButtons["G"], self.radioButtons["B"], self.radioButtons["H"], self.radioButtons["S"], self.radioButtons["V"]});
+    Utils.RadioButton.LinkPeers({self.radioButtons["R"], self.radioButtons["G"], self.radioButtons["B"], self.radioButtons["H"], 
+        self.radioButtons["S"], self.radioButtons["V"], self.radioButtons["O"]});
     self.radioContainer:SetHeight(top);
     
     self.hex = Turbine.UI.Lotro.TextBox();
@@ -134,7 +144,6 @@ function ColorPicker:Constructor(color, dimension)
         end
     end
     
-    L:SetContext("/ColorPicker");
     self.okButton = Turbine.UI.Lotro.Button();
     self.okButton:SetParent(self);
     self.okButton:SetSize(math.floor(radioButtonWidth / 2 + 0.5), radioButtonHeight);
@@ -304,6 +313,14 @@ function ColorPicker:SelectDimension(sliderDimension)
     -- Update display
     self:SetColor(self.color);
 end
+
+-- IN DEVELOPMENT
+function ColorPicker:SetOpacity()
+    self.slider:SetOpacity();
+
+    --self:SetColor();
+end
+-- IN DEVELOPMENT
 
 function ColorPicker:HexChanged()
     local R, G, B = string.match(self.hex:GetText(), "^(%x%x)(%x%x)(%x%x)$");

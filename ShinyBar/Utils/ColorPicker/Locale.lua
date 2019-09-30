@@ -49,6 +49,12 @@ text.ColorPicker.Value = {
    [fr] = "Valeur";
    [ru] = "Значение";
 };
+text.ColorPicker.Opacity = {
+   [en] = "Opacity";
+   [de] = "Opazität";
+   [fr] = "Opacité";
+   [ru] = "помутнение";
+};
 text.ColorPicker.Ok = {
    [en] = "Ok";
    [de] = "Ok";
@@ -210,5 +216,5 @@ text.ColorPicker.Colors.WhiteSmoke           = { [en] = "White Smoke";          
 text.ColorPicker.Colors.Yellow               = { [en] = "Yellow";                 [de] = ""; [fr] = ""; [ru] = ""; };
 text.ColorPicker.Colors.YellowGreen          = { [en] = "Yellow Green";           [de] = ""; [fr] = ""; [ru] = ""; };
 
--- Add translations to the global database (see Thurallor.Common.Utils.Locale.lua)
+-- Add translations to the global database
 L:AddText(text);

@@ -187,6 +187,7 @@ function Palette:GetColor(color)
 end
 
 function Palette:SetDimensions(dimensionX, dimensionY)
+    Turbine.Shell.WriteLine("X = " .. dimensionX .. " Y = " .. dimensionY);
     self.dimensionX, self.dimensionY = dimensionX, dimensionY
     self.overlay:SetBackground(imagePath .. "/" .. dimensionX .. "_x_" .. dimensionY .. ".tga");
     local sliderDimension = Utils.Color.GetOtherDimensions(dimensionY);

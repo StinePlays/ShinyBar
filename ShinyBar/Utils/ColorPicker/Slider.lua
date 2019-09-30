@@ -118,6 +118,18 @@ function Slider:GetValue()
     return self.value;
 end
 
+
+
+function Slider:SetOpacity()
+    --self:SetBackground(imagePath .. "/O_grad.tga");
+    self:SetBackground(nil);
+    self:SetBackColorBlendMode(Turbine.UI.BlendMode.None)
+    self.overlay:SetBackground(nil);
+    self.overlay:SetBackColorBlendMode(Turbine.UI.BlendMode.None)
+end
+
+
+
 function Slider:SetDimension(dimension)
     self.dimension = dimension;
     self.overlay:SetBackground(imagePath .. "/" .. dimension .. "_grad.tga");

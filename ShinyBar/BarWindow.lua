@@ -1,5 +1,4 @@
 import "Shiny.ShinyBar.Utils.ColorPicker"; --TODO add transparency
---import "Thurallor.Common.UI.ColorPicker";
 import "Shiny.ShinyBar.Utils.Utils"
 
 BarWindow = class (Turbine.UI.Window);
