@@ -51,11 +51,11 @@ function Color:GetHSV()
 end
 
 function Color:Get(dimension)
-    if (string.find("RGB", dimension)) then
+    if (string.find("RGBA", dimension)) then
         return self[dimension];
     end
     local dims = {};
-    dims.H, dims.S, dims.V = self:GetHSV();
+    dims.H, dims.S, dims.V = self:GetHSV();   
     return dims[dimension];
 end
 
@@ -87,11 +87,11 @@ function Color:SetHSV(H, S, V)
         self.R, self.G, self.B = t, p, V;
     else -- (i == 5)
         self.R, self.G, self.B = V, p, q;
-    end        
+    end       
 end
 
 function Color:Set(dimension, value)
-    if (string.find("RGB", dimension)) then
+    if (string.find("RGBA", dimension)) then
         self[dimension] = value;
         return;
     end

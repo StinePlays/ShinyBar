@@ -71,7 +71,7 @@ function GeneralControl:Constructor(parent, tSettings)
 
     changeBackgroundColor = Turbine.UI.MenuItem("Change background color");
     changeBackgroundColor.Click = function(sender, args)
-        bgColor = ShinyBar.Utils.ColorPicker(self:GetBackColor());
+        bgColor = Utils.ColorPicker(self:GetBackColor());
 
         bgColor.ColorChanged = function(picker)
             local color = picker:GetColor();

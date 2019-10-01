@@ -77,7 +77,7 @@ function Slider:SetPointerPosition()
 end
 
 function Slider:SetGamut(color)
-    if (string.find("RGB", self.dimension)) then
+    if (string.find("RGBA", self.dimension)) then
         local backColor = Utils.Color(1, color.R, color.G, color.B);
         backColor[self.dimension] = 0;
         self.overlay:SetBackColor(backColor);
@@ -87,12 +87,14 @@ function Slider:SetGamut(color)
         self.overlay:SetBackColor(Utils.Color(1 - V, 0, 0, 0));
     elseif (self.dimension == "V") then
         self.overlay:SetBackColor(color);
-    else -- (self.dimension == "S") then
+    elseif (self.dimension == "S") then
         local H, S, V = color:GetHSV();
         local backColor = Utils.Color(1, 0, 0, 0);
         backColor:SetHSV(H, 1, 1);
         self:SetBackColor(backColor);
         self.overlay:SetBackColor(Utils.Color(1 - V, 0, 0, 0));
+    else 
+        self.overlay:SetBackColor(color);
     end
 end
 
@@ -118,18 +120,6 @@ function Slider:GetValue()
     return self.value;
 end
 
-
-
-function Slider:SetOpacity()
-    --self:SetBackground(imagePath .. "/O_grad.tga");
-    self:SetBackground(nil);
-    self:SetBackColorBlendMode(Turbine.UI.BlendMode.None)
-    self.overlay:SetBackground(nil);
-    self.overlay:SetBackColorBlendMode(Turbine.UI.BlendMode.None)
-end
-
-
-
 function Slider:SetDimension(dimension)
     self.dimension = dimension;
     self.overlay:SetBackground(imagePath .. "/" .. dimension .. "_grad.tga");
@@ -142,11 +132,16 @@ function Slider:SetDimension(dimension)
         self.overlay:SetBackColorBlendMode(Turbine.UI.AlphaBlend);
     elseif (self.dimension == "V") then
         self.overlay:SetBackColorBlendMode(Turbine.UI.BlendMode.Color);
-    else -- (self.dimension == "S") then
+    elseif (self.dimension == "S") then
         self:SetBackground(imagePath .. "/S_grad.tga");
         self:SetBackColorBlendMode(Turbine.UI.BlendMode.Screen);
         self.overlay:SetBackground(nil);
         self.overlay:SetBackColorBlendMode(Turbine.UI.AlphaBlend);
+    else
+        self:SetBackground(imagePath .. "/A_grad.tga");
+        self:SetBackColorBlendMode(Turbine.UI.BlendMode.Grayscale);
+        self.overlay:SetBackground(nil);
+        self.overlay:SetBackColorBlendMode(Turbine.UI.Normal);
     end
 end
 

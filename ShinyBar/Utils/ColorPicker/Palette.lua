@@ -161,7 +161,6 @@ function Palette:SetGamut(color)
 end
 
 function Palette:SetSpotColor(color)
-    color.A = 1;
     self.spot:SetBackColor(color);
 end
 

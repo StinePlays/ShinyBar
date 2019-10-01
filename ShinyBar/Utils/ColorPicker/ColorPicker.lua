@@ -19,9 +19,9 @@ function ColorPicker:Constructor(color, dimension)
     Turbine.UI.Lotro.Window.Constructor(self);
 
     if (color) then
-        color = Utils.Color(color.R, color.G, color.B);
+        color = Utils.Color(color.A, color.R, color.G, color.B);
     else
-        color = Utils.Color(0.5, 1.0, 1.0);
+        color = Utils.Color(1, 0.5, 1.0, 1.0);
     end
     if (not dimension) then
         dimension = "V";
@@ -39,7 +39,7 @@ function ColorPicker:Constructor(color, dimension)
     self:SetResizable(true);
 
     self.color = Utils.Color(1, 0.5, 0.5, 0.5);
-    self.originalColor = Utils.Color(color.R, color.G, color.B);
+    self.originalColor = Utils.Color(color.A, color.R, color.G, color.B);
 
     self.topBorderOutside = Turbine.UI.Control();
     self.topBorderOutside:SetParent(self);
@@ -117,17 +117,17 @@ function ColorPicker:Constructor(color, dimension)
     end
     top = top + radioButtonHeight;
 
-    self.radioButtons["O"] = Utils.RadioButton(self.radioContainer, L:GetText("Opacity"), false);
-    self.radioButtons["O"]:SetFont(Turbine.UI.Lotro.Font.TrajanPro15);
-    self.radioButtons["O"]:SetTop(top);
-    self.radioButtons["O"]:SetSize(radioButtonWidth, radioButtonHeight);
-    self.radioButtons["O"].Clicked = function()
-        self:SetOpacity("O");
+    self.radioButtons["A"] = Utils.RadioButton(self.radioContainer, L:GetText("Opacity"), false);
+    self.radioButtons["A"]:SetFont(Turbine.UI.Lotro.Font.TrajanPro15);
+    self.radioButtons["A"]:SetTop(top);
+    self.radioButtons["A"]:SetSize(radioButtonWidth, radioButtonHeight);
+    self.radioButtons["A"].Clicked = function()
+        self:SelectDimension("A");
     end
     top = top + radioButtonHeight;
     
     Utils.RadioButton.LinkPeers({self.radioButtons["R"], self.radioButtons["G"], self.radioButtons["B"], self.radioButtons["H"], 
-        self.radioButtons["S"], self.radioButtons["V"], self.radioButtons["O"]});
+        self.radioButtons["S"], self.radioButtons["V"], self.radioButtons["A"]});
     self.radioContainer:SetHeight(top);
     
     self.hex = Turbine.UI.Lotro.TextBox();
@@ -143,7 +143,7 @@ function ColorPicker:Constructor(color, dimension)
             self:HexChanged();
         end
     end
-    
+    L:SetContext("/ColorPicker");
     self.okButton = Turbine.UI.Lotro.Button();
     self.okButton:SetParent(self);
     self.okButton:SetSize(math.floor(radioButtonWidth / 2 + 0.5), radioButtonHeight);
@@ -306,21 +306,17 @@ function ColorPicker:SetZOrder(z)
 end
 
 function ColorPicker:SelectDimension(sliderDimension)
-    local paletteXDimension, paletteYDimension = Utils.Color.GetOtherDimensions(sliderDimension);
-    self.slider:SetDimension(sliderDimension);
-    self.palette:SetDimensions(paletteXDimension, paletteYDimension);
-    
+    if sliderDimension == "A" then
+        self.slider:SetDimension(sliderDimension);
+        self.palette:SetDimensions("H", "S");
+    else    
+        local paletteXDimension, paletteYDimension = Utils.Color.GetOtherDimensions(sliderDimension);
+        self.slider:SetDimension(sliderDimension);
+        self.palette:SetDimensions(paletteXDimension, paletteYDimension);
+    end
     -- Update display
     self:SetColor(self.color);
 end
-
--- IN DEVELOPMENT
-function ColorPicker:SetOpacity()
-    self.slider:SetOpacity();
-
-    --self:SetColor();
-end
--- IN DEVELOPMENT
 
 function ColorPicker:HexChanged()
     local R, G, B = string.match(self.hex:GetText(), "^(%x%x)(%x%x)(%x%x)$");
@@ -350,7 +346,7 @@ function ColorPicker:GetColor()
 end
 
 function ColorPicker:UpdateHex()
-    local R, G, B, H, S, V;
+    local A, R, G, B, H, S, V;
     self.updatingHex = true;
     self.hex:SetText(self.color:GetHex());
     self.hex:Focus();
@@ -364,6 +360,7 @@ function ColorPicker:UpdateHex()
     H = math.floor(H * 360 + 0.5);
     S = math.floor(S * 100 + 0.5);
     V = math.floor(V * 100 + 0.5);
+    A = math.floor(self.color.A * 100 + 0.5);
     L:SetContext("/ColorPicker");
     self.radioButtons["R"]:SetText(L:GetText("Red") .. ": " .. tostring(R) .. "%");
     self.radioButtons["G"]:SetText(L:GetText("Green") .. ": " .. tostring(G) .. "%");
@@ -371,6 +368,7 @@ function ColorPicker:UpdateHex()
     self.radioButtons["H"]:SetText(L:GetText("Hue") .. ": " .. tostring(H) .. "°");
     self.radioButtons["S"]:SetText(L:GetText("Saturation") .. ": " .. tostring(S) .. "%");
     self.radioButtons["V"]:SetText(L:GetText("Value") .. ": " .. tostring(V) .. "%");
+    self.radioButtons["A"]:SetText(L:GetText("Opacity") .. ": " .. tostring(A) .. "%");
     local colorName = self.colorNames[self.color:GetHex()];
     self.palette:ShowColorName(colorName);
 end
